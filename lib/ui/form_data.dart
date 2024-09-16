@@ -1,6 +1,5 @@
 import '/ui/tampil_data.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class FormData extends StatefulWidget {
   const FormData({Key? key}) : super(key: key);
@@ -13,57 +12,101 @@ class FormDataState extends State<FormData> {
   final _namaController = TextEditingController();
   final _nimController = TextEditingController();
   final _tahunController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Input Data"),
+        backgroundColor: Colors.teal,
       ),
-      body: Container(
-        margin: const EdgeInsets.all(10),
-        child: Column(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: ListView(
           children: [
             _textboxNama(),
+            SizedBox(height: 16),
             _textboxNIM(),
+            SizedBox(height: 16),
             _textboxTahun(),
-            _tombolSimpan()
+            SizedBox(height: 20),
+            _tombolSimpan(),
           ],
         ),
       ),
     );
   }
 
-  _textboxNama() {
-    return TextField(
-      decoration: const InputDecoration(labelText: "Nama"),
-      controller: _namaController,
+  Widget _textboxNama() {
+    return Card(
+      elevation: 5,
+      child: ListTile(
+        leading: Icon(Icons.person),
+        title: TextField(
+          decoration: const InputDecoration(
+            hintText: "Masukkan Nama",
+            border: InputBorder.none,
+          ),
+          controller: _namaController,
+        ),
+      ),
     );
   }
 
-  _textboxNIM() {
-    return TextField(
-      decoration: const InputDecoration(labelText: "NIM"),
-      controller: _nimController,
+  Widget _textboxNIM() {
+    return Card(
+      elevation: 5,
+      child: ListTile(
+        leading: Icon(Icons.credit_card),
+        title: TextField(
+          decoration: const InputDecoration(
+            hintText: "Masukkan NIM",
+            border: InputBorder.none,
+          ),
+          keyboardType: TextInputType.number,
+          controller: _nimController,
+        ),
+      ),
     );
   }
 
-  _textboxTahun() {
-    return TextField(
-      decoration: const InputDecoration(labelText: "Tahun Lahir"),
-      controller: _tahunController,
+  Widget _textboxTahun() {
+    return Card(
+      elevation: 5,
+      child: ListTile(
+        leading: Icon(Icons.calendar_today),
+        title: TextField(
+          decoration: const InputDecoration(
+            hintText: "Masukkan Tahun Lahir",
+            border: InputBorder.none,
+          ),
+          keyboardType: TextInputType.number,
+          controller: _tahunController,
+        ),
+      ),
     );
   }
 
-  _tombolSimpan() {
+  Widget _tombolSimpan() {
     return ElevatedButton(
-        onPressed: () {
-          String nama = _namaController.text;
-          String nim = _nimController.text;
-          int tahun = int.parse(_tahunController.text);
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) =>
-                  TampilData(nama: nama, nim: nim, tahun: tahun)));
-        },
-        child: const Text('Simpan'));
+      onPressed: () {
+        String nama = _namaController.text;
+        String nim = _nimController.text;
+        int tahun = int.parse(_tahunController.text);
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => TampilData(nama: nama, nim: nim, tahun: tahun),
+          ),
+        );
+      },
+      child: const Text('Simpan'),
+      style: ElevatedButton.styleFrom(
+        foregroundColor: Colors.white, backgroundColor: Colors.teal, // Text color
+        padding: const EdgeInsets.symmetric(vertical: 15.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+      ),
+    );
   }
 }
